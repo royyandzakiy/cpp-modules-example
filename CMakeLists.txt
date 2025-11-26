@@ -1,23 +1,16 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.28)
+project(MyCpp23Project)
 
-project(cmake_project_template LANGUAGES CXX)
-
-# Use VCPKG toolchain (set externally or via presets)
-if(DEFINED ENV{VCPKG_ROOT})
-    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
-    message(STATUS "VCPKG_ROOT: $ENV{VCPKG_ROOT}")
-    message(STATUS "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
-endif()
-
-# C++ settings
-set(CMAKE_CXX_STANDARD 20)
+# Set C++23 standard
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Dependencies (resolved through vcpkg)
-find_package(spdlog CONFIG REQUIRED)
-
-# Final executable
-add_executable(${PROJECT_NAME} src/main.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-	spdlog::spdlog
+add_library(foo)
+target_sources(foo
+  PUBLIC
+    FILE_SET CXX_MODULES FILES
+      src/foo.cxx
 )
+
+add_executable(my_app src/main.cpp src/math.cpp src/math.ixx)
+target_link_libraries(my_app foo)

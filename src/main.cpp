@@ -1,19 +1,17 @@
-#include <iostream>
-#include <spdlog/spdlog.h>
+import <iostream>;
+import <print>;
+import math;
+import foo;
 
-int main()
-{
-	// Set the global log level to info to see messages from info and above.
-	spdlog::set_level(spdlog::level::info);
+int main() {
+    int x = 5;
+    int y = 3;
 
-	// Log a few messages at different levels to demonstrate spdlog.
-	spdlog::info("Welcome to the spdlog console application!");
-	spdlog::warn("This is a warning message.");
-	spdlog::error("This is an error message.");
-	spdlog::critical("This is a critical message!");
+    std::println("Adding: {} + {} = {}", x, y, add(x, y));
+    std::println("Multiplying: {} * {} = {}", x, y, multiply(x, y));
 
-	// Log a formatted message using the "fmt" syntax included with spdlog.
-	spdlog::info("The answer is {}", 42);
+    foo f;
+    f.helloworld();
 
-	return 0;
+    return 0;
 }
