@@ -1,174 +1,49 @@
-# CMake Project Template
+# C++23 Modules Project
 
-## Pre-Requisites
-- Install Visual Studio Code
-	- Add CMake Extension
-- Install Microsoft Visual Studio 2022
-	- Install v143
-- Install vcpkg or conan
+A demonstration of C++23 module implementation using CMake as the build system.
 
-## Setup Package Managers
-### Using vcpkg
-Don't need to do anything, just configure normally
+## Project Structure
 
-### Using conan
-```shell
-conan install . -s build_type=Debug -s compiler.cppstd=20 --build=missing # will locally build any missing deps, might take time at first call
+```
+src/
+├── foo.cxx          # Primary module interface for foo module
+├── main.cpp         # Main application importing modules
+├── math.ixx         # Primary module interface for math module
+└── math.cpp         # Module implementation for math module
 ```
 
-This tutorial shows how to create a C++ "Hello World" program that uses the fmt library with CMake and vcpkg.
+## Module Implementation
 
-Articles:
-- [Tutorial: Install and use packages with CMake](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started)
-- [Tutorial: Install and use packages with CMake in Visual Studio](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-vs)
+### Math Module
+- **math.ixx**: Primary module interface declaring exported functions
+- **math.cpp**: Module implementation containing function definitions
 
-## How to Run this?
-### Preparation
-- [Set Up `vcpkg`](#1-set-up-vcpkg) (Follow steps below on How to Recreate)
-- [Manually create `CMakeUserPresets.json`](#create-cmake-preset-files) in `{Project Root}/CMakeUserPresets.json`
-- Open vcpkg or
-- Install all pre-configured packages
-  ```bash
-  vcpkg install
-  ```
+The math module exports two mathematical operations:
+- `add(int a, int b)`
+- `multiply(int a, int b)`
 
-### Run in VS Code
-- Run Task: `Configure`
-- Run Task: `Clean -> Build -> Run`
+### Foo Module
+- **foo.cxx**: Combined module interface and implementation
+- Uses global module fragment for `#include <iostream>`
+- Exports a `foo` class with constructor, destructor, and `helloworld()` method
 
-> **Note:** You can check `.vscode/tasks.json` if you want to see what cmd script is being run for each task
+### Main Application
+- Imports standard library modules (`<iostream>`, `<print>`)
+- Imports custom modules (`math`, `foo`)
+- Demonstrates usage of exported module functionality
 
-## How to Recreate
+## Build System
 
-### Prerequisites
+The project uses CMake with C++23 standard support:
+- Module files are specified using `FILE_SET CXX_MODULES FILES`
+- Explicit module dependency management
+- Standard library module imports
 
-- A terminal
-- A C++ compiler (MSVC for Windows users)
-- CMake
-- Git
+## Key Features
 
-### 1. Set up vcpkg
+- Modern C++23 module syntax
+- Separation of module interfaces and implementations
+- CMake integration for module-aware builds
+- Standard library module usage
 
-#### Clone the repository
-
-```bash
-git clone https://github.com/microsoft/vcpkg.git
-
-# optionally move to C:
-mv vcpkg C:/
-```
-
-#### Run the bootstrap script
-
-Navigate to the vcpkg directory and run:
-
-```bash
-cd vcpkg && bootstrap-vcpkg.bat
-```
-
-#### Integrate with Visual Studio MSBuild
-
-```bash
-.\vcpkg.exe integrate install
-```
-
-### 2. Set up the project
-
-### 3. Add dependencies and project files
-
-#### Create manifest file
-
-- create `vcpkg.json` at root of project, add all needed dependencies
-
-```json
-{
-    "dependencies": [
-        "fmt",
-        "paho-mqttpp3",
-        "cppwinrt"
-    ]
-}
-```
-
-#### Create CMakeLists.txt
-
-```cmake
-cmake_minimum_required(VERSION 3.10)
-
-project(HelloWorld)
-
-set(CMAKE_CXX_STANDARD 17)
-
-find_package(fmt CONFIG REQUIRED)
-find_package(PahoMqttCpp CONFIG REQUIRED)
-find_package(cppwinrt CONFIG REQUIRED)
-
-add_executable(HelloWorld helloworld.cpp)
-
-target_link_libraries(HelloWorld
-    PRIVATE
-        windowsapp # REQUIRED!
-        fmt::fmt
-        PahoMqttCpp::paho-mqttpp3
-        Microsoft::CppWinRT
-)
-```
-
-#### Include all vcpkg headers
-
-```cpp
-#include <fmt/core.h>
-#include <winrt/base.h>
-#include <mqtt/async_client.h>
-// ...
-
-int main()
-{
-    // ...
-}
-```
-
-#### Create CMake preset files
-
-**CMakePresets.json:**
-
-```json
-{
-  "version": 2,
-  "configurePresets": [
-    {
-      "name": "my-vcpkg-cmake-preset",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-      }
-    }
-  ]
-}
-```
-
-> **Note:** For a more advanced `CMakePresets.json`, check out one in thsi project
-
-**CMakeUserPresets.json:**
-
-```json
-{
-  "version": 2,
-  "configurePresets": [
-    {
-      "name": "default",
-      "inherits": "my-vcpkg-cmake-preset",
-      "environment": {
-        "VCPKG_ROOT": "<path to vcpkg>" // "VCPKG_ROOT": "C:/vcpkg"
-      }
-    }
-  ]
-}
-```
-
-> **Note:** Replace `<path to vcpkg>` with your actual vcpkg installation path. Don't commit CMakeUserPresets.json to version control.
-
-## References
-
-- (vcpkg integration with CMake projects)[https://learn.microsoft.com/en-us/vcpkg/users/buildsystems/cmake-integration]
+This project serves as a reference implementation for C++23 module development with proper build system configuration.
