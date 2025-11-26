@@ -1,6 +1,6 @@
 # C++ Modules Project
 
-A demonstration of C++23 module implementation using CMake as the build system.
+A demonstration of C++ module implementation using CMake as the build system.
 
 ## Project Structure
 
@@ -41,9 +41,9 @@ The project uses CMake with C++23 standard support:
 
 ## Key Features
 
-- Modern C++23 module syntax
+- Modern C++ module syntax
 - Separation of module interfaces and implementations
 - CMake integration for module-aware builds
 - Standard library module usage
 
-This project serves as a reference implementation for C++23 module development with proper build system configuration.
+This project serves as a reference implementation for C++ module development with proper build system configuration.
