@@ -1,4 +1,4 @@
-# C++23 Modules Project
+# C++ Modules Project
 
 A demonstration of C++23 module implementation using CMake as the build system.
 
