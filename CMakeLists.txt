@@ -15,6 +15,7 @@ target_sources(foo
 add_executable(my_app
         src/main.cpp
         src/math.cpp
-        src/math.ixx)
+        src/math.ixx
+)
 
 target_link_libraries(my_app foo)

@@ -1,9 +1,9 @@
-// Global module fragment where #includes can happen
-module;
-#include <iostream>
+module; // Global module fragment whereas inbetween this and the export module, #include can be called
 
-// first thing after the Global module fragment must be a module command
-export module foo;
+#include <iostream> // all includes added here... it will NOT be exported outwards with the module. it will stay to be used ONLY inside this module
+// anymore #include ...
+
+export module foo; // first thing after the Global module fragment must be a module command
 
 export class foo {
   public:

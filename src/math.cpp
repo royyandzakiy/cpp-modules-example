@@ -1,4 +1,4 @@
-module math;
+module math;  // This says "I'm implementing the math module"
 
 int add(int a, int b) {
     return a + b;

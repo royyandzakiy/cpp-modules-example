@@ -12,6 +12,14 @@ src/
 └── math.cpp         # Module implementation for math module
 ```
 
+A Better practice would be structuring like such:
+```
+src/
+├── foo.cpp          # Primary module interface for foo module
+├── main.cpp         # Main application importing modules
+└── math.cpp         # Primary Module implementation for math module
+```
+
 ## Module Implementation
 
 ### Math Module
@@ -21,6 +29,17 @@ src/
 The math module exports two mathematical operations:
 - `add(int a, int b)`
 - `multiply(int a, int b)`
+
+### What is `.ixx`?
+
+`.ixx` is **Microsoft's convention** for module interface files. It's similar to `.hpp` in concept but with important differences:
+
+- **`.hpp` (header)**: Textual inclusion (`#include`) - copy-paste code
+- **`.ixx` (module interface)**: Binary module interface - compiled representation
+
+Other compilers might use different extensions (GCC often uses `.cppm`).
+
+Latest consensus: JUST USE .cpp on all your module files. All compilers are good enough to process them (don't need to use special .ixx files or alike. it will just seem confusing)
 
 ### Foo Module
 - **foo.cxx**: Combined module interface and implementation
