@@ -10,7 +10,6 @@
 			"name": "base",
 			"description": "Sets generator, build and install directory, vcpkg",
 			"hidden": true,
-			"generator": "Ninja",
 			"binaryDir": "${sourceDir}/build/${presetName}"
 		},
 		{
@@ -33,50 +32,6 @@
 						"Windows"
 					]
 				}
-			}
-		},
-		{
-			"name": "macos-base",
-			"description": "Sets compilers, build type",
-			"inherits": [
-				"base"
-			],
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_CXX_COMPILER": "clang++",
-				"ENABLE_WINDOWS_WINRT": "OFF"
-			},
-			"vendor": {
-				"microsoft.com/VisualStudioSettings/CMake/1.0": {
-					"hostOS": [
-						"macOS"
-					]
-				}
-			}
-		},
-		{
-			"name": "linux-base",
-			"description": "Sets compilers, build type",
-			"inherits": "base",
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_CXX_COMPILER": "g++",
-				"ENABLE_WINDOWS_WINRT": "OFF"
-			},
-			"vendor": {
-				"microsoft.com/VisualStudioSettings/CMake/1.0": {
-					"hostOS": [
-						"Linux"
-					]
-				}
-			}
-		},
-		{
-			"name": "linux-warnings",
-			"description": "Enables dev warnings (-wdev)",
-			"inherits": "linux-base",
-			"warnings": {
-				"dev": true
 			}
 		}
 	],
@@ -105,38 +60,6 @@
 			"nativeToolOptions": [
 				"-verbosity:normal"
 			]
-		},
-		{
-			"name": "macos-clean-build",
-			"description": "Clean before build (--clean-first)",
-			"configurePreset": "macos-base",
-			"inherits": "core-build",
-			"cleanFirst": true
-		},
-		{
-			"name": "macos-verbose-build",
-			"description": "Passes -v to Ninja",
-			"configurePreset": "macos-base",
-			"inherits": "core-build",
-			"nativeToolOptions": [
-				"-v"
-			]
-		},
-		{
-			"name": "linux-clean-build",
-			"description": "Clean before build (--clean-first)",
-			"configurePreset": "linux-base",
-			"inherits": "core-build",
-			"cleanFirst": true
-		},
-		{
-			"name": "linux-verbose-build",
-			"description": "Passes -v to Ninja",
-			"configurePreset": "linux-base",
-			"inherits": "core-build",
-			"nativeToolOptions": [
-				"-v"
-			]
 		}
 	],
 	"testPresets": [
@@ -150,18 +73,8 @@
 			}
 		},
 		{
-			"name": "macos-core-test",
-			"configurePreset": "macos-base",
-			"inherits": "core-test"
-		},
-		{
 			"name": "windows-core-test",
 			"configurePreset": "windows-base",
-			"inherits": "core-test"
-		},
-		{
-			"name": "linux-core-test",
-			"configurePreset": "linux-base",
 			"inherits": "core-test"
 		}
 	]
